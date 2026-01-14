@@ -44,9 +44,57 @@
 #    - Generate reports on banking activities.
 #
 # 7. **Data Persistence**:
-#    - Save account details and transaction history to a file (e.g., CSV or JSON) for persistence.
+#    - Save account details and transaction history to a file (e.g., CSV or JSON) for
+#       persistence.
 #    - Load data from the file when the system starts.
 #
 # ### Example Class Structure
 #
-# ```python
+#
+
+class UserAccounts():
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        pass
+    def create_account(self):
+        pass
+
+    def delete_account(self):
+        pass
+
+    def viewAccountDetails(self):
+        pass
+
+    def changePassword(self):
+        pass
+
+    def aunthentication(self):
+        pass
+
+
+class Transactions():
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        pass
+    def deposit(self):
+        pass
+
+    def withdraw(self):
+        pass
+
+    def check_balance(self):
+        pass
+
+    def transfer_funds(self):
+        pass
+
+def mainMenu():
+    print("\n Welcome to Our Banking system")
+
+
