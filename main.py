@@ -9,7 +9,7 @@
 #
 # 2. **Transaction Management**:
 #    - Deposit funds (e.g., `deposit` function).
-#    - Withdraw funds (e.g., `withdraw` function).
+#    - Withdraw funds (e.g., `withdraw` function). NB Withdrawals have 2% tax
 #    - Transfer funds between accounts (e.g., `transfer` function).
 #
 # 3. **Balance Inquiry**:
@@ -53,19 +53,24 @@
 #
 
 class UserAccounts():
+    accounts_count = 0
+    def __init__(self, first_name, last_name, password, balance=0):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.password = password
+        self.balance = round(balance, 2)
+        self.acc_id = self.generate_acc()
 
-    def __init__(self):
-        pass
 
     def __repr__(self):
-        pass
-    def create_account(self):
-        pass
+        return print(F'\nAccount ID: {self.acc_id} \nFirst Name: {self.first_name} \nLast Name: {self.last_name} \nBalance: {self.balance} \n')
+
+    # generating an account number
+    def generate_acc(self):
+        UserAccounts.accounts_count += 1
+        return f'BS{UserAccounts.accounts_count:05d}'
 
     def delete_account(self):
-        pass
-
-    def viewAccountDetails(self):
         pass
 
     def changePassword(self):
@@ -75,21 +80,31 @@ class UserAccounts():
         pass
 
 
-class Transactions():
+class Transactions(UserAccounts):
 
-    def __init__(self):
-        pass
+    def __init__(self, transaction_id, balance, acc_id):
+        super().__init__(balance, acc_id)
+        self.transaction_id = transaction_id
 
     def __repr__(self):
-        pass
+        return print(f'\nTransaction ID: {self.transaction_id} \n Balance: ${self.balance} \nAccount ID: {self.acc_id}')
     def deposit(self):
-        pass
+        deposit_amount = float(input('Enter the deposit amount: $'))
+        self.balance += deposit_amount
+        return f'Your current balance is ${self.balance}'
 
     def withdraw(self):
-        pass
+        withdraw_amount = float(input('Enter withdrawal amount: $'))
+        withdrawal_tax = (0.02 * withdraw_amount)
+        if withdraw_amount > self.balance:
+            print('Insufficient Funds!')
+        else:
+            self.balance -= (withdraw_amount + withdrawal_tax)
+
+        return f'Your current balance is {self.balance}\n You have paid ${withdrawal_tax} tax'
 
     def check_balance(self):
-        pass
+        return f'Your current balance is ${self.balance}'
 
     def transfer_funds(self):
         pass
