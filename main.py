@@ -49,9 +49,9 @@
 #    - Load data from the file when the system starts.
 #
 # ### Example Class Structure
-#
-#
 
+# this class is responsible for managing the user accounts of the account holders
+import time
 class UserAccounts():
     accounts_count = 0
     def __init__(self, first_name, last_name, password, balance=0):
@@ -79,7 +79,7 @@ class UserAccounts():
     def aunthentication(self):
         pass
 
-
+# this class is responsible for the transactions in that happen within the banking system
 class Transactions(UserAccounts):
 
     def __init__(self, transaction_id, balance, acc_id):
@@ -96,7 +96,7 @@ class Transactions(UserAccounts):
     def withdraw(self):
         withdraw_amount = float(input('Enter withdrawal amount: $'))
         withdrawal_tax = (0.02 * withdraw_amount)
-        if withdraw_amount > self.balance:
+        if withdraw_amount > (self.balance + withdrawal_tax):
             print('Insufficient Funds!')
         else:
             self.balance -= (withdraw_amount + withdrawal_tax)
@@ -110,6 +110,25 @@ class Transactions(UserAccounts):
         pass
 
 def mainMenu():
+    time.sleep(2)
+    print('_____________________________________________________________________________________')
     print("\n Welcome to Our Banking system")
+    print('_____________________________________________________________________________________')
 
+    print('\nPlease select option')
+    print('1. Check Bank Balance\n2. Deposit Amount\n3. Withdraw Amount \n4. Tranfer Amount')
+    time.sleep(1)
+    option = int(input('\nPlease select option: '))
 
+    if option == 1:
+        Transactions.check_balance()
+    elif option == 2:
+        Transactions.deposit()
+    elif option == 3:
+        Transactions.withdraw()
+    elif option == 4:
+        Transactions.transfer_funds()
+    else:
+        print('Invalid option!')
+
+mainMenu()
