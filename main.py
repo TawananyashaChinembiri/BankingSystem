@@ -63,35 +63,37 @@ class UserAccounts():
 
 
     def __repr__(self):
-        return print(F'\nAccount ID: {self.acc_id} \nFirst Name: {self.first_name} \nLast Name: {self.last_name} \nBalance: {self.balance} \n')
+        return F'\nAccount ID: {self.acc_id} \nFirst Name: {self.first_name} \nLast Name: {self.last_name} \nBalance: ${self.balance} \n'
 
     # generating an account number
     def generate_acc(self):
         UserAccounts.accounts_count += 1
         return f'BS{UserAccounts.accounts_count:05d}'
 
-    def delete_account(self):
-        pass
-
     def changePassword(self):
-        pass
-
-    def aunthentication(self):
-        pass
+        new_password = input('Please enter new password.')
+        self.password = new_password
+        return f'Your password has been updated to : {self.password}'
 
 # this class is responsible for the transactions in that happen within the banking system
 class Transactions(UserAccounts):
 
-    def __init__(self, transaction_id, balance, acc_id):
-        super().__init__(balance, acc_id)
-        self.transaction_id = transaction_id
+    transaction_count = 0
+
+    def __init__(self, first_name, last_name, password, balance=0):
+        super().__init__(first_name, last_name, password, balance)
+        self.transaction_id = self.generate_transaction_id()
 
     def __repr__(self):
-        return print(f'\nTransaction ID: {self.transaction_id} \n Balance: ${self.balance} \nAccount ID: {self.acc_id}')
+        return f'\nTransaction ID: {self.transaction_id} \n Balance: ${self.balance} \nAccount ID: {self.acc_id}'
     def deposit(self):
         deposit_amount = float(input('Enter the deposit amount: $'))
         self.balance += deposit_amount
         return f'Your current balance is ${self.balance}'
+
+    def generate_transaction_id(self):
+        Transactions.transaction_count += 1
+        return f'T{Transactions.accounts_count:05d}'
 
     def withdraw(self):
         withdraw_amount = float(input('Enter withdrawal amount: $'))
@@ -109,7 +111,7 @@ class Transactions(UserAccounts):
     def transfer_funds(self):
         pass
 
-def mainMenu():
+def mainMenu(user_account):
     time.sleep(2)
     print('_____________________________________________________________________________________')
     print("\n Welcome to Our Banking system")
@@ -121,14 +123,29 @@ def mainMenu():
     option = int(input('\nPlease select option: '))
 
     if option == 1:
-        Transactions.check_balance()
+        print(user_account.check_balance())
     elif option == 2:
-        Transactions.deposit()
+        print(user_account.deposit())
     elif option == 3:
-        Transactions.withdraw()
+        print(user_account.withdraw())
     elif option == 4:
-        Transactions.transfer_funds()
+        print(user_account.transfer_funds())
     else:
         print('Invalid option!')
 
-mainMenu()
+# creating account for login
+def create_account():
+    firstName = input('Enter First name: ')
+    lastName = input('Enter Last name: ')
+    password = input('Enter password: ')
+
+    return Transactions(firstName, lastName, password)
+
+print('______________________________________________________________________________')
+print('WELCOME TO OUR BANKING SYSTEM! \n')
+print('______________________________________________________________________________')
+
+print('If you don\'t mind creating an account with us, Please continue\n')
+user_account = create_account()
+while True:
+    mainMenu(user_account)
